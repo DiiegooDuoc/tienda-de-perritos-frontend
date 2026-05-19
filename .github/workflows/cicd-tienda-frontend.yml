@@ -25,7 +25,6 @@ jobs:
 
     - name: Build imagen Frontend y push a ECR
       run: |
-        # Se removió el comando 'cd frontend' porque el Dockerfile está en la raíz
         docker build -t tienda-frontend .
         docker tag tienda-frontend:latest ${{ secrets.ECR_REPO_URL_FRONTEND }}:latest
         docker push ${{ secrets.ECR_REPO_URL_FRONTEND }}:latest
@@ -42,6 +41,6 @@ jobs:
             "docker pull ${{ secrets.ECR_REPO_URL_FRONTEND }}:latest",
             "docker stop tienda-frontend || true",
             "docker rm tienda-frontend || true",
-            "docker run -d --name tienda-frontend -p 80:80 ${{ secrets.ECR_REPO_URL_FRONTEND }}:latest"
+            "docker run -d --name tienda-frontend -p 80:8080 ${{ secrets.ECR_REPO_URL_FRONTEND }}:latest"
           ]}' \
           --output text
